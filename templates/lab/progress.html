@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Progress - Vega Market Lab{% endblock %}
+{% block content %}
+<h1 class="section-title">Sizning progressingiz</h1>
+<p class="muted">{{ solved_count }} / {{ total_count }} kategoriya yechildi.</p>
+<div class="progress-bar-outer" style="margin-bottom:24px;">
+  <div class="progress-bar-inner" style="width: {% widthratio solved_count total_count 100 %}%;"></div>
+</div>
+
+{% for row in rows %}
+<div class="card" style="margin-bottom:16px; {% if row.solved %}border-color: var(--accent);{% endif %}">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <div>
+      <strong>{{ row.code }}</strong> &middot; {{ row.title_uz }}
+      {% if row.solved %}<span class="badge">Yechildi</span>{% endif %}
+    </div>
+  </div>
+
+  {% for hint in row.visible_hints %}
+    <div class="hint-box">Maslahat {{ forloop.counter }}: {{ hint }}</div>
+  {% endfor %}
+
+  <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; align-items:center;">
+    {% if row.hints_unlocked < row.hints_total %}
+    <form method="post" action="{% url 'lab:unlock_hint' row.vuln_id %}">
+      {% csrf_token %}
+      <button class="btn btn-ghost btn-sm" type="submit">Keyingi maslahatni ochish ({{ row.hints_unlocked }}/{{ row.hints_total }})</button>
+    </form>
+    {% endif %}
+
+    {% if not row.solved %}
+    <form method="post" action="{% url 'lab:submit_flag' %}" style="display:flex; gap:8px;">
+      {% csrf_token %}
+      <input type="hidden" name="vuln_id" value="{{ row.vuln_id }}">
+      <input type="text" name="flag" placeholder="FLAG{...}" style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); color:var(--text); padding:6px 10px;">
+      <button class="btn btn-primary btn-sm" type="submit">Yuborish</button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Hisob-faktura - Vega Market{% endblock %}
+{% block content %}
+<h1 class="section-title">Hisob-faktura</h1>
+{% if order %}
+<div class="card">
+  <p><strong>Buyurtma:</strong> #{{ order.id }}</p>
+  <p><strong>Xaridor:</strong> {{ order.user.username }}</p>
+  <p><strong>Jami:</strong> {{ order.total }} so'm</p>
+  {% if order.notes %}<p><strong>Izoh:</strong> {{ order.notes }}</p>{% endif %}
+</div>
+{% else %}
+<p class="muted">Hisob-faktura topilmadi.</p>
+{% endif %}
+{% endblock %}

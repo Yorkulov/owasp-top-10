@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Katalog - Vega Market{% endblock %}
+{% block content %}
+<h1 class="section-title">Katalog</h1>
+<form method="get" class="card" style="display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end;">
+  <div class="form-field" style="margin-bottom:0;">
+    <label>Kategoriya</label>
+    <select name="category">
+      <option value="">Barchasi</option>
+      {% for c in categories %}
+        <option value="{{ c.slug }}" {% if request.GET.category == c.slug %}selected{% endif %}>{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-field" style="margin-bottom:0;">
+    <label>Brend</label>
+    <select name="brand">
+      <option value="">Barchasi</option>
+      {% for b in brands %}
+        <option value="{{ b.id }}" {% if request.GET.brand == b.id|stringformat:'s' %}selected{% endif %}>{{ b.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-field" style="margin-bottom:0;">
+    <label>Narx (min)</label>
+    <input type="text" name="min_price" value="{{ request.GET.min_price|default:'' }}">
+  </div>
+  <div class="form-field" style="margin-bottom:0;">
+    <label>Narx (max)</label>
+    <input type="text" name="max_price" value="{{ request.GET.max_price|default:'' }}">
+  </div>
+  <div class="form-field" style="margin-bottom:0;">
+    <label>Saralash</label>
+    <select name="sort">
+      <option value="-created_at" {% if request.GET.sort == '-created_at' %}selected{% endif %}>Yangi</option>
+      <option value="price" {% if request.GET.sort == 'price' %}selected{% endif %}>Arzon narx</option>
+      <option value="-price" {% if request.GET.sort == '-price' %}selected{% endif %}>Qimmat narx</option>
+      <option value="-rating_avg" {% if request.GET.sort == '-rating_avg' %}selected{% endif %}>Reyting</option>
+    </select>
+  </div>
+  <button class="btn btn-primary" type="submit">Filtrlash</button>
+</form>
+
+<div class="product-grid">
+  {% for p in products %}
+  <a class="product-card" href="{% url 'shop:product_detail' p.slug %}">
+    <div class="thumb">{% if p.image_url %}<img src="{{ p.image_url }}" alt="{{ p.name }}" loading="lazy">{% else %}{{ p.image_note }}{% endif %}</div>
+    <div class="body">
+      <div class="title">{{ p.name }}</div>
+      <div class="muted" style="font-size:.8rem;">{{ p.category.name }}</div>
+      <div class="rating">&#9733; {{ p.rating_avg }}</div>
+      <div class="price">{{ p.price }} so'm</div>
+    </div>
+  </a>
+  {% empty %}
+    <p class="muted">Mahsulot topilmadi.</p>
+  {% endfor %}
+</div>
+{% endblock %}

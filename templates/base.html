@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Vega Market{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{% url 'shop:home' %}">Vega<span>Market</span></a>
+      <form class="search-form" action="{% url 'shop:search' %}" method="get">
+        <input type="text" name="q" placeholder="Mahsulot qidirish..." value="{{ request.GET.q|default:'' }}">
+        <button type="submit">Qidirish</button>
+      </form>
+      <nav class="nav-links">
+        <a href="{% url 'shop:catalog' %}">Katalog</a>
+        <a href="{% url 'cart:view' %}">Savatcha</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'orders:list' %}">Buyurtmalarim</a>
+          <a href="{% url 'accounts:profile' %}">{{ user.username }}</a>
+          <a href="{% url 'accounts:logout' %}">Chiqish</a>
+        {% else %}
+          <a href="{% url 'accounts:login' %}">Kirish</a>
+          <a href="{% url 'accounts:register' %}">Ro'yxatdan o'tish</a>
+        {% endif %}
+        <a href="{% url 'lab:progress' %}">Progress <span class="badge">{{ lab_solved_count }}/{{ lab_total_count }}</span></a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Mavzuni almashtirish">&#9788;</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Vega Market &mdash; OWASP Top 10:2025 Black-Box Practice Lab. Faqat mahalliy, bitta foydalanuvchi uchun ta'lim maqsadida.
+    </div>
+  </footer>
+
+  <script src="{% static 'js/theme.js' %}"></script>
+  <script src="{% static 'js/vendor/analytics.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

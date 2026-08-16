@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Vega Market - Bosh sahifa{% endblock %}
+{% block content %}
+<div class="hero">
+  <div>
+    <h1>Sifat va ishonch bilan xarid qiling</h1>
+    <p class="muted">Minglab mahsulotlar, tez yetkazib berish, oson qaytarish.</p>
+    <a class="btn btn-primary" href="{% url 'shop:catalog' %}">Katalogni ko'rish</a>
+  </div>
+</div>
+
+<h2 class="section-title">Kategoriyalar</h2>
+<div class="nav-links" style="flex-wrap:wrap; gap:10px;">
+  {% for c in categories %}
+    <a class="btn btn-ghost btn-sm" href="{% url 'shop:catalog' %}?category={{ c.slug }}">{{ c.name }}</a>
+  {% endfor %}
+</div>
+
+<h2 class="section-title">Tanlangan mahsulotlar</h2>
+<div class="product-grid">
+  {% for p in featured %}
+  <a class="product-card" href="{% url 'shop:product_detail' p.slug %}">
+    <div class="thumb">{% if p.image_url %}<img src="{{ p.image_url }}" alt="{{ p.name }}" loading="lazy">{% else %}{{ p.image_note }}{% endif %}</div>
+    <div class="body">
+      <div class="title">{{ p.name }}</div>
+      <div class="rating">&#9733; {{ p.rating_avg }}</div>
+      <div class="price">{{ p.price }} so'm</div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}

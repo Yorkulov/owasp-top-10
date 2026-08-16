@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Yordam - Vega Market{% endblock %}
+{% block content %}
+<h1 class="section-title">Yordam va aloqa</h1>
+<form method="post" class="card" style="margin-bottom:24px;">
+  {% csrf_token %}
+  <div class="form-field"><label>Mavzu</label><input type="text" name="subject" required></div>
+  <div class="form-field"><label>Xabar</label><textarea name="body" rows="4" required></textarea></div>
+  <button class="btn btn-primary" type="submit">Yuborish</button>
+</form>
+<h3>Mening murojaatlarim</h3>
+{% for m in my_messages %}
+  <div class="card" style="margin-bottom:10px;">
+    <strong>{{ m.subject }}</strong>
+    <p class="muted">{{ m.created_at|date:"d.m.Y H:i" }}</p>
+    <p>{{ m.body }}</p>
+  </div>
+{% empty %}
+  <p class="muted">Hozircha murojaat yo'q.</p>
+{% endfor %}
+{% endblock %}

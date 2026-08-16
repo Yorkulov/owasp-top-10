@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Kirish - Vega Market{% endblock %}
+{% block content %}
+<div class="card form-narrow">
+  <h1 class="section-title" style="margin-top:0;">Hisobga kirish</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-field"><label>Foydalanuvchi nomi</label>{{ form.username }}</div>
+    <div class="form-field"><label>Parol</label>{{ form.password }}</div>
+    <div class="form-field"><label>{{ form.remember }} Meni eslab qol</label></div>
+    <button class="btn btn-primary" type="submit" style="width:100%;">Kirish</button>
+  </form>
+  <p class="muted" style="margin-top:14px;">Hisobingiz yo'qmi? <a href="{% url 'accounts:register' %}">Ro'yxatdan o'ting</a></p>
+</div>
+{% endblock %}

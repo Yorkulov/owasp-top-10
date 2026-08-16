@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Beta vositalar - Vega Market{% endblock %}
+{% block content %}
+<h1 class="section-title">Beta admin vositalari</h1>
+{% if is_admin_via_cookie %}
+  <div class="card" style="border-color: var(--accent);">
+    <p>Admin rejimi faollashtirildi.</p>
+    <p>Flag: <code>{{ flag }}</code></p>
+  </div>
+{% else %}
+  <div class="card">
+    <p class="muted">Bu bo'lim faqat administrator sozlamalari yoqilgan foydalanuvchilar uchun.</p>
+  </div>
+{% endif %}
+{% endblock %}

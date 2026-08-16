@@ -1,0 +1,11 @@
+venv/
+instructor_solutions/
+__pycache__/
+*.pyc
+db.sqlite3
+instance_config.env
+media/logs/*.log
+staticfiles/
+static/js/vendor/analytics.js
+.DS_Store
+*.log

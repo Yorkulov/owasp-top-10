@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Buyurtma #{{ order.id }} - Vega Market{% endblock %}
+{% block content %}
+<h1 class="section-title">Buyurtma #{{ order.id }}</h1>
+<div class="card">
+  <p><strong>Xaridor:</strong> {{ order.user.username }}</p>
+  <p><strong>Holat:</strong> {{ order.get_status_display }}</p>
+  <p><strong>Manzil:</strong> {{ order.shipping_address }}</p>
+  <p><strong>Jami:</strong> {{ order.total }} so'm</p>
+  {% if order.notes %}<p><strong>Izoh:</strong> {{ order.notes }}</p>{% endif %}
+  <table class="data-table" style="margin-top:14px;">
+    <thead><tr><th>Mahsulot</th><th>Narx</th><th>Soni</th></tr></thead>
+    <tbody>
+    {% for item in order.items.all %}
+      <tr><td>{{ item.product_name }}</td><td>{{ item.unit_price }}</td><td>{{ item.quantity }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

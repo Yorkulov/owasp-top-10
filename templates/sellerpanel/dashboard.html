@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Sotuvchi paneli - Vega Market{% endblock %}
+{% block content %}
+<h1 class="section-title">Sotuvchi paneli</h1>
+<h3>Mahsulotlar</h3>
+<table class="data-table">
+  <thead><tr><th>ID</th><th>Nomi</th><th>Narx</th><th>Ombor</th><th></th></tr></thead>
+  <tbody>
+  {% for p in products %}
+    <tr>
+      <td>{{ p.id }}</td><td>{{ p.name }}</td><td>{{ p.price }}</td><td>{{ p.stock }}</td>
+      <td><a class="btn btn-ghost btn-sm" href="{% url 'sellerpanel:import_image' p.id %}">Rasmni URL orqali import qilish</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h3 style="margin-top:32px;">So'nggi buyurtmalar</h3>
+<table class="data-table">
+  <thead><tr><th>ID</th><th>Xaridor</th><th>Holat</th><th>Jami</th></tr></thead>
+  <tbody>
+  {% for o in orders %}
+    <tr><td>#{{ o.id }}</td><td>{{ o.user.username }}</td><td>{{ o.get_status_display }}</td><td>{{ o.total }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

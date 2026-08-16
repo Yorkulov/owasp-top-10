@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} - Vega Market{% endblock %}
+{% block content %}
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:32px; margin-top:24px;">
+  <div class="card detail-thumb" style="aspect-ratio:1/1; padding:0; display:flex; align-items:center; justify-content:center; color:var(--text-dim);">
+    {% if product.image_url %}<img src="{{ product.image_url }}" alt="{{ product.name }}">{% else %}{{ product.image_note }}{% endif %}
+  </div>
+  <div>
+    <h1>{{ product.name }}</h1>
+    <p class="muted">{{ product.category.name }} &middot; {{ product.brand.name }}</p>
+    <div class="rating">&#9733; {{ product.rating_avg }} ({{ product.reviews.count }} sharh)</div>
+    <p class="price" style="font-size:1.6rem; margin:10px 0;">{{ product.price }} so'm</p>
+    <p class="muted">{% if product.stock > 0 %}Omborda: {{ product.stock }} dona{% else %}Tugagan{% endif %}</p>
+    <p>{{ product.description }}</p>
+    <form method="post" action="{% url 'cart:add' product.id %}" style="display:flex; gap:10px; margin-top:16px;">
+      {% csrf_token %}
+      <input type="number" name="quantity" value="1" min="1" style="width:80px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); color:var(--text); padding:8px;">
+      <button class="btn btn-primary" type="submit">Savatchaga qo'shish</button>
+    </form>
+  </div>
+</div>
+
+<h2 class="section-title">O'xshash mahsulotlar</h2>
+<div class="product-grid">
+  {% for p in related %}
+  <a class="product-card" href="{% url 'shop:product_detail' p.slug %}">
+    <div class="thumb">{% if p.image_url %}<img src="{{ p.image_url }}" alt="{{ p.name }}" loading="lazy">{% else %}{{ p.image_note }}{% endif %}</div>
+    <div class="body">
+      <div class="title">{{ p.name }}</div>
+      <div class="price">{{ p.price }} so'm</div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+<h2 class="section-title">Sharhlar</h2>
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'reviews:add' product.slug %}" class="card" style="margin-bottom:20px;">
+  {% csrf_token %}
+  <div class="form-field">
+    <label>Baho (1-5)</label>
+    <input type="number" name="rating" min="1" max="5" value="5">
+  </div>
+  <div class="form-field">
+    <label>Fikringiz</label>
+    <textarea name="comment" rows="3"></textarea>
+  </div>
+  <button class="btn btn-primary" type="submit">Sharh qoldirish</button>
+</form>
+{% endif %}
+{% for r in product.reviews.all %}
+  <div class="card" style="margin-bottom:10px;">
+    <strong>{{ r.user.username }}</strong> &middot; <span class="rating">&#9733; {{ r.rating }}</span>
+    <p class="muted">{{ r.created_at|date:"d.m.Y" }}</p>
+    <p>{{ r.comment }}</p>
+  </div>
+{% empty %}
+  <p class="muted">Hali sharh yo'q.</p>
+{% endfor %}
+{% endblock %}

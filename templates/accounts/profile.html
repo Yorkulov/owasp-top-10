@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Profil - Vega Market{% endblock %}
+{% block content %}
+<h1 class="section-title">Profil sozlamalari</h1>
+
+{% if flag %}
+<div class="card" style="border-color: var(--accent); margin-bottom:20px;">
+  <strong style="color:var(--accent);">Administrator paneliga xush kelibsiz.</strong>
+  <p>Flag: <code>{{ flag }}</code></p>
+</div>
+{% endif %}
+
+<div class="card form-narrow" style="margin:0 0 20px;">
+  <p><strong>Foydalanuvchi:</strong> {{ user.username }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <p><strong>Rol:</strong> {{ profile.get_role_display }}</p>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-field"><label>Telefon</label>{{ form.phone }}</div>
+    <div class="form-field"><label>Manzil</label>{{ form.address }}</div>
+    <button class="btn btn-primary" type="submit">Saqlash</button>
+  </form>
+</div>
+{% endblock %}

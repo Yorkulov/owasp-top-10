@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Savatcha - Vega Market{% endblock %}
+{% block content %}
+<h1 class="section-title">Savatcha</h1>
+<table class="data-table">
+  <thead><tr><th>Mahsulot</th><th>Narx</th><th>Soni</th><th>Jami</th><th></th></tr></thead>
+  <tbody>
+  {% for item in cart_items %}
+    <tr>
+      <td><a href="{% url 'shop:product_detail' item.product.slug %}">{{ item.product.name }}</a></td>
+      <td>{{ item.product.price }}</td>
+      <td>
+        <form method="post" action="{% url 'cart:update' item.product.id %}" style="display:flex; gap:6px;">
+          {% csrf_token %}
+          <input type="number" name="quantity" value="{{ item.quantity }}" style="width:80px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); color:var(--text); padding:6px;">
+          <button class="btn btn-ghost btn-sm" type="submit">Yangilash</button>
+        </form>
+      </td>
+      <td>{{ item.subtotal }}</td>
+      <td><a class="btn btn-sm btn-ghost" href="{% url 'cart:remove' item.product.id %}">O'chirish</a></td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5" class="muted">Savatcha bo'sh.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+<p style="margin-top:16px; font-size:1.2rem;">Jami: <strong class="price">{{ total }} so'm</strong></p>
+{% if cart_items %}
+<a class="btn btn-primary" href="{% url 'orders:checkout' %}">Rasmiylashtirish</a>
+{% endif %}
+{% endblock %}
