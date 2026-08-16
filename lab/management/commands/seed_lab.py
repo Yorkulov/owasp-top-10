@@ -103,10 +103,6 @@ class Command(BaseCommand):
             Profile.objects.create(user=seller, role="seller", address="Chilonzor tumani, Toshkent")
 
         if not User.objects.filter(username="demo_customer").exists():
-            # === INTENTIONAL VULNERABILITY: A07:2025 - Authentication Failures ===
-            # See instructor_solutions/A07-AUTH.md
-            # Deliberately weak, guessable password + no login rate limiting
-            # (see accounts/views.login_view - no throttling/lockout).
             demo = User.objects.create_user("demo_customer", "demo@vega.local", "password1")
             Profile.objects.create(
                 user=demo, role="customer",
@@ -143,10 +139,6 @@ class Command(BaseCommand):
         (js_dir / "analytics.js").write_text(content)
 
     def seed_sensitive_log(self):
-        # === INTENTIONAL VULNERABILITY: A09:2025 - Security Logging & Alerting Failures ===
-        # See instructor_solutions/A09-LOGGING.md
-        # A sensitive token was accidentally logged in plaintext, and the
-        # log file itself is served without any access control.
         flag = compute_flag("A09-LOGGING")
         logs_dir = settings.MEDIA_ROOT / "logs"
         logs_dir.mkdir(parents=True, exist_ok=True)

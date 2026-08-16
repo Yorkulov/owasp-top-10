@@ -20,16 +20,6 @@ class Cart:
         self.save()
 
     def set_quantity(self, product_id, quantity):
-        """
-        === INTENTIONAL VULNERABILITY: A06:2025 - Insecure Design ===
-        See instructor_solutions/A06-INSECURE-DESIGN.md
-
-        No validation that quantity must be a positive integer. A negative
-        quantity flows straight into the order total calculation at
-        checkout, letting a student drive the total to zero or below - a
-        classic business-logic / insecure-design flaw, distinct from an
-        input-sanitization (injection) bug.
-        """
         pid = str(product_id)
         self.cart[pid] = quantity
         self.save()

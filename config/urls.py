@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.static import serve as static_serve
 
-from lab.misconfig_views import internal_backup, robots_txt
+from lab.extra_views import internal_backup, robots_txt
 
 urlpatterns = [
     path("django-admin/", admin.site.urls),

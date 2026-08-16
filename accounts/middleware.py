@@ -1,11 +1,11 @@
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 
-from .weak_remember import COOKIE_NAME, parse_token
+from .remember import COOKIE_NAME, parse_token
 
 
 class RememberMeMiddleware:
-    """Auto-login from the (intentionally unsigned) remember_token cookie."""
+    """Auto-login from the remember_token cookie, if present and valid."""
 
     def __init__(self, get_response):
         self.get_response = get_response

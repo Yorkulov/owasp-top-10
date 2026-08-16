@@ -46,15 +46,6 @@ def product_detail(request, slug):
 
 
 def search(request):
-    """
-    === INTENTIONAL VULNERABILITY: A05:2025 - Injection (SQL) ===
-    See instructor_solutions/A05-INJECTION.md
-
-    The query string is interpolated directly into raw SQL instead of using
-    the ORM or parameterized query placeholders, allowing classic UNION-
-    based SQL injection against the SQLite database, including reading the
-    unrelated lab_flagvault table.
-    """
     q = request.GET.get("q", "")
     results = []
     error = None

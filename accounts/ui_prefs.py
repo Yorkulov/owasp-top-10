@@ -1,14 +1,4 @@
-"""
-=== INTENTIONAL VULNERABILITY: A08:2025 - Software or Data Integrity Failures ===
-See instructor_solutions/A08-INTEGRITY.md
-
-The ui_prefs cookie stores client-side "preferences" as base64(JSON) with no
-signature. It is meant only for theme/layout preferences, but the beta
-tools page mistakenly trusts a "role" field inside it for an authorization
-decision. A real implementation must never use unsigned client state for
-access control - use django.core.signing or re-check the role server-side
-from the database.
-"""
+"""Client-side UI preferences (theme, layout density) stored in a cookie."""
 
 import base64
 import json

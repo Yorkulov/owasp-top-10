@@ -52,14 +52,6 @@ def unlock_hint(request, vuln_id):
 
 @csrf_exempt
 def internal_flag_vault(request):
-    """
-    === INTENTIONAL VULNERABILITY: A01:2025 - Broken Access Control (SSRF) ===
-    See instructor_solutions/A01-BAC-SSRF.md
-
-    "Internal-only" endpoint gated by a header a normal browser never sends.
-    Reachable only through the seller panel's server-side URL-fetch feature
-    (SSRF) - see sellerpanel/views.py.
-    """
     header_key = f"HTTP_{INTERNAL_HEADER.upper().replace('-', '_')}"
     if request.META.get(header_key) != INTERNAL_HEADER_VALUE:
         return HttpResponseForbidden("internal service: forbidden")

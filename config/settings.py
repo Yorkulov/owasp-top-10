@@ -1,10 +1,5 @@
 """
-Django settings for the OWASP Top 10:2025 Black-Box Practice Lab.
-
-This app is intentionally vulnerable in specific, documented places
-(see /instructor_solutions). Every OTHER part of the platform should be
-built as securely as reasonably possible, so that unintended bugs do not
-create accidental extra vulnerabilities. See section 8 of the build spec.
+Django settings for the Vega Market e-commerce marketplace.
 """
 
 from pathlib import Path

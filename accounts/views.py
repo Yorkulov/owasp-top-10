@@ -9,8 +9,8 @@ from lab.flags import compute_flag
 from .forms import LoginForm, ProfileForm, RegisterForm
 from .models import Profile
 from .ui_prefs import COOKIE_NAME, decode_prefs, default_prefs, encode_prefs
-from .weak_remember import COOKIE_NAME as REMEMBER_COOKIE
-from .weak_remember import MAX_AGE_SECONDS, make_token
+from .remember import COOKIE_NAME as REMEMBER_COOKIE
+from .remember import MAX_AGE_SECONDS, make_token
 
 
 def register(request):
@@ -79,11 +79,6 @@ def profile(request):
 
     flag = None
     if prof.role == "admin":
-        # === INTENTIONAL VULNERABILITY: A04:2025 - Cryptographic Failures ===
-        # See instructor_solutions/A04-CRYPTO.md
-        # Reachable in practice only by forging the unsigned remember_token
-        # cookie for the "siteadmin" username (accounts/weak_remember.py) -
-        # nobody is expected to know the real (random) admin password.
         flag = compute_flag("A04-CRYPTO")
 
     return render(request, "accounts/profile.html", {"form": form, "profile": prof, "flag": flag})
@@ -91,11 +86,6 @@ def profile(request):
 
 @login_required
 def beta_tools(request):
-    """
-    Hidden, unlinked "beta admin tools" page. Trusts the role field inside
-    the client-controlled ui_prefs cookie instead of the server-side
-    Profile.role - see accounts/ui_prefs.py.
-    """
     raw = request.COOKIES.get(COOKIE_NAME)
     prefs = decode_prefs(raw) if raw else None
     is_admin_via_cookie = bool(prefs and prefs.get("role") == "admin")

@@ -1,12 +1,6 @@
 """
-=== INTENTIONAL VULNERABILITY: A04:2025 - Cryptographic Failures ===
-See instructor_solutions/A04-CRYPTO.md
-
-The "remember me" token below is base64(username:expiry_timestamp) with NO
-signature/MAC. Any client can forge a token for any username (e.g. the
-seeded admin account) and the middleware will trust it blindly. A real
-implementation must use django.core.signing (HMAC-signed, tamper-evident)
-instead of raw base64.
+"Remember me" token helpers used by the login flow and its auto-login
+middleware. See accounts/middleware.py for where these are consumed.
 """
 
 import base64

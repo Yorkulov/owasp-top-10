@@ -1,13 +1,3 @@
-"""
-=== INTENTIONAL VULNERABILITY: A02:2025 - Security Misconfiguration ===
-See instructor_solutions/A02-MISCONFIG.md
-
-robots.txt "Disallow"s a path, which most crawlers respect but which is
-NOT an access control mechanism - the path is still served to anyone who
-requests it directly. It looks like a leftover ops backup left reachable
-after a deploy.
-"""
-
 from django.http import HttpResponse
 
 from .flags import compute_flag

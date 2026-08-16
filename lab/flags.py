@@ -18,7 +18,7 @@ import hmac
 from django.conf import settings
 
 # The fixed, documented list of vulnerability IDs. Keep in sync with
-# lab/vulnerabilities.py and instructor_solutions/.
+# lab/vulnerabilities.py.
 VULN_IDS = [
     "A01-BAC-IDOR",
     "A01-BAC-SSRF",

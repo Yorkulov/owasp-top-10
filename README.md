@@ -71,17 +71,16 @@ reviews/                Mahsulot sharhlari
 support/                Yordam/aloqa bo'limi
 lab/                    Flag/seed/progress/hint tizimi
 templates/, static/     UI (navy/teal "quiet luxury" dizayn)
-instructor_solutions/   FAQAT O'QITUVCHI UCHUN — talabalarga tarqatishdan oldin o'chiring
 ```
 
 ### O'qituvchilar uchun
 
-`instructor_solutions/` papkasida har bir zaiflikning aniq joyi va
-exploit yo'li tavsiflangan. **Talabalarga repo'ni tarqatishdan oldin bu
-papkani albatta o'chiring** (yoki alohida, o'qituvchi-only branch/reponi
-saqlang). Talabalarga tarqatishdan oldin platformaning o'zini (nazarda
-tutilmagan zaifliklar bormi-yo'qmi) boshqa xavfsizlik mutaxassisi bilan
-tekshirtirib chiqing.
+Yechimlar/javoblar kaliti bu repoda **saqlanmaydi** (ochiq kodli repo'da
+turgan bo'lsa, talaba uni bevosita o'qib olishi mumkin edi). U alohida,
+faqat o'qituvchiga tegishli materialda beriladi — so'rov bo'yicha yoki
+alohida (public bo'lmagan) manbadan oling. Talabalarga tarqatishdan oldin
+platformaning o'zini (nazarda tutilmagan zaifliklar bormi-yo'qmi) boshqa
+xavfsizlik mutaxassisi bilan tekshirtirib chiqing.
 
 ---
 
@@ -128,18 +127,18 @@ telemetry.
 
 ### Coverage
 
-All 10 OWASP Top 10:2025 categories are implemented as real,
-working features of the marketplace (not standalone checklist pages).
-See `instructor_solutions/README.md` (instructor-only) for the full map.
+All 10 OWASP Top 10:2025 categories are implemented as real, working
+features of the marketplace (not standalone checklist pages). The
+source code contains no labels or comments indicating which category a
+given piece of code implements — that mapping is kept in a separate,
+instructor-only answer key that is not part of this repository.
 
 ### For instructors
 
-Remove `instructor_solutions/` before distributing the repo to students.
-Have the platform itself reviewed for *unintended* vulnerabilities before
-release — every intentional one is marked in source with:
-
-```
-=== INTENTIONAL VULNERABILITY: <category> ===
-```
+An answer key (exact location + exploit path for each category) is
+available separately, outside this repository, on request. Before
+releasing this repo to students, have the platform itself reviewed for
+*unintended* vulnerabilities (bugs beyond the 10 intended ones) by
+another security-literate reviewer.
 
 License: MIT.

@@ -26,16 +26,6 @@ def dashboard(request):
 
 @login_required
 def import_image(request, product_id):
-    """
-    === INTENTIONAL VULNERABILITY: A01:2025 - Broken Access Control (SSRF) ===
-    See instructor_solutions/A01-BAC-SSRF.md
-
-    Fetches whatever URL the seller supplies, server-side, with no
-    allow-list restricting it to public image hosts. A malicious/curious
-    seller can point it at internal-only services (e.g.
-    http://127.0.0.1:<port>/lab/internal/flag-vault/) that are not meant to
-    be reachable directly from the browser.
-    """
     if not _is_seller(request.user):
         messages.error(request, "Bu bo'lim faqat sotuvchilar uchun.")
         return redirect("shop:home")
